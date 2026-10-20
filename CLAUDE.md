@@ -13,7 +13,7 @@ conventions apply. What governs this project is LUMOS.md and the skills in
 
 When starting the dev server, use background mode:
 
-```
+```bash
 astro dev --background
 ```
 
@@ -21,7 +21,7 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 ## Documentation
 
-Full documentation: https://docs.astro.build
+Full documentation: <https://docs.astro.build>
 
 Consult these guides before working on related tasks:
 
