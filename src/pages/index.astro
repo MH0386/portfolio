@@ -1,41 +1,86 @@
 ---
 import Layout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Wrapper/Section.astro";
-import Heading from "@/components/Typography/Heading.astro";
-import Eyebrow from "@/components/Typography/Eyebrow.astro";
-import Img from "@/components/Media/Img.astro";
-import lumos_background from "@/assets/graphics/lumos-background.svg";
-import Icon from "@/components/Media/Icon.astro";
-import logo_icon from "@/assets/logo/logo-icon.svg";
 import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
+import Eyebrow from "@/components/Typography/Eyebrow.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
+import Card from "@/components/Item/Card.astro";
+import {
+  certificates,
+  education,
+  experience,
+  intro,
+  projects,
+} from "@/data/profile.ts";
 ---
 
 <Layout theme="dark">
-  <Section
-    paddingBottom="even"
-    containerClass="flex-grow"
-    paddingTop="even"
-    class="flex-grow"
-    style="min-height: calc(100svh - var(--nav-height));"
-  >
-    <ContentWrapper
-      class="flex-grow theme-brand"
-      variant="card"
-      mediaOpacity={100}
-    >
-      <Icon src={logo_icon} variant="large" />
-      <Heading variant="display" tag="h1" class="margin-block-8"
-        >Style Guide</Heading
-      >
-      <Eyebrow variant="tag">v0.0.3</Eyebrow>
-      <Img
-        slot="column2"
-        src={lumos_background}
-        width={1920}
-        height={1080}
-        loading="eager"
-        fetchPriority="high"
-      />
+  <Section>
+    <ContentWrapper>
+      <Eyebrow>{intro.location}</Eyebrow>
+      <Heading tag="h1">{intro.name}</Heading>
+      <Paragraph>{intro.summary}</Paragraph>
     </ContentWrapper>
+  </Section>
+  <Section id="projects">
+    <Heading tag="h2">Projects</Heading>
+    <Grid small={2} medium={3}>
+      {
+        projects.map((project) => (
+          <Card
+            headingTag="h3"
+            eyebrow={project.dates}
+            heading={project.title}
+            text={project.summary}
+            buttonLabel={project.href ? "View project" : undefined}
+            buttonHref={project.href}
+          />
+        ))
+      }
+    </Grid>
+  </Section>
+  <Section id="experience">
+    <Heading tag="h2">Experience</Heading>
+    {
+      experience.map((role) => (
+        <Card
+          headingTag="h3"
+          eyebrow={role.dates}
+          heading={role.role}
+          text={role.text}
+        />
+      ))
+    }
+  </Section>
+  <Section id="education">
+    <Heading tag="h2">Education</Heading>
+    {
+      education.map((item) => (
+        <Card
+          headingTag="h3"
+          eyebrow={item.dates}
+          heading={item.heading}
+          text={item.text}
+        />
+      ))
+    }
+  </Section>
+  <Section id="certificates">
+    <Heading tag="h2">Certificates</Heading>
+    <Grid small={2} medium={3}>
+      {
+        certificates.map((certificate) => (
+          <Card
+            headingTag="h3"
+            eyebrow={`${certificate.issuer} Â· ${certificate.issued}`}
+            heading={certificate.title}
+            buttonLabel="View certificate"
+            buttonHref={certificate.href}
+          />
+        ))
+      }
+    </Grid>
   </Section>
 </Layout>
