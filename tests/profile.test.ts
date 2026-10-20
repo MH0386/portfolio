@@ -108,10 +108,26 @@ test("described projects keep the published facts", () => {
     "Titanic - Machine Learning from Disaster",
   );
   assert.equal(byTitle["Car Price Prediction"].dates, "Apr 2023 – May 2023");
-  assert.match(byTitle["Car Price Prediction"].summary, /72,435-row/);
-  assert.match(byTitle["Logistic Regression"].summary, /0\.0001/);
-  assert.match(byTitle["Motorcycle Data Analysis"].summary, /1,061 columns and 7 rows/);
-  assert.match(byTitle["Iris Classification"].summary, /97\.7%/);
+  const carPriceSummary = byTitle["Car Price Prediction"].summary;
+  if (typeof carPriceSummary !== "string") {
+    assert.fail("expected Car Price Prediction summary");
+  }
+  assert.match(carPriceSummary, /72,435-row/);
+  const logisticSummary = byTitle["Logistic Regression"].summary;
+  if (typeof logisticSummary !== "string") {
+    assert.fail("expected Logistic Regression summary");
+  }
+  assert.match(logisticSummary, /0\.0001/);
+  const motorcycleSummary = byTitle["Motorcycle Data Analysis"].summary;
+  if (typeof motorcycleSummary !== "string") {
+    assert.fail("expected Motorcycle Data Analysis summary");
+  }
+  assert.match(motorcycleSummary, /1,061 columns and 7 rows/);
+  const irisSummary = byTitle["Iris Classification"].summary;
+  if (typeof irisSummary !== "string") {
+    assert.fail("expected Iris Classification summary");
+  }
+  assert.match(irisSummary, /97\.7%/);
   assert.equal(byTitle["MH0386.github.io"].dates, undefined);
   assert.equal(byTitle["MH0386.github.io"].href, "https://mh0386.github.io");
   assert.equal(projects.filter((project) => project.href).length, 1);

@@ -69,7 +69,7 @@ test("title-only cards have no empty paragraph and one project link", () => {
   assert.equal((html.match(/View certificate/g) ?? []).length, 10);
   for (const certificate of certificates) {
     assert.ok(html.includes(certificate.href));
-    assert.ok(html.includes(`${certificate.issuer} Â· ${certificate.issued}`));
+    assert.ok(html.includes(`${certificate.issuer} · ${certificate.issued}`));
   }
 });
 
