@@ -27,14 +27,14 @@ Documentation lives at **[lumosframework.com](https://lumosframework.com)**.
 ## Getting started
 
 ```sh
-npm create lumos@latest my-site
+npm create lumos@latest portfolio
 ```
 
 That scaffolds a new site from this repository and installs its dependencies
 with whichever package manager you ran it with. Then:
 
 ```sh
-cd my-site
+cd portfolio
 npm run dev
 ```
 
