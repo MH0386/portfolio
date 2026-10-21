@@ -1,7 +1,5 @@
 ---
-import Icon from "@/components/Media/Icon.astro";
 import NavLink from "@/components/Global/NavLink.astro";
-import logo from "@/assets/logo/logo.svg";
 import { SITE_NAME } from "@/consts.ts";
 
 interface Props {
@@ -22,8 +20,8 @@ const { render = true, overlap = false } = Astro.props;
   render && (
     <header class:list={["nav_wrap", overlap && "overlap"]}>
       <div class="nav_inner">
-        <a class="nav_logo" href="/" aria-label={SITE_NAME}>
-          <Icon src={logo} variant="full-width" />
+        <a class="nav_logo text-style-small" href="/">
+          {SITE_NAME}
         </a>
         <button
           class="nav_toggle"
@@ -55,6 +53,9 @@ const { render = true, overlap = false } = Astro.props;
   <style>
     .nav_toggle {
       display: none;
+    }
+    .nav_logo {
+      opacity: 1 !important;
     }
     .nav_menu {
       grid-template-rows: 1fr;
@@ -142,7 +143,15 @@ const { render = true, overlap = false } = Astro.props;
     .nav_logo {
       display: flex;
       align-items: center;
-      width: 6.5rem;
+      width: auto;
+      max-width: 14rem;
+      font-weight: var(--primary-medium);
+      line-height: var(--line-height-small);
+      letter-spacing: var(--letter-spacing-tight);
+      text-align: start;
+      text-decoration: none;
+      text-wrap: balance;
+      color: inherit;
       transition: opacity var(--hover-duration) var(--hover-ease);
       @media (hover: hover) {
         &:hover {
@@ -264,6 +273,10 @@ const { render = true, overlap = false } = Astro.props;
     }
 
     @media (width >= 48rem) {
+      .nav_logo {
+        max-width: 18rem;
+      }
+
       .nav_toggle {
         display: none;
       }

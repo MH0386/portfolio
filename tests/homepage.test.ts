@@ -10,6 +10,7 @@ import {
   intro,
   projects,
 } from "../src/data/profile.ts";
+import { formatPeriod } from "../src/utils/dates.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = readFileSync(join(root, "dist", "index.html"), "utf8");
@@ -69,7 +70,11 @@ test("title-only cards have no empty paragraph and one project link", () => {
   assert.equal((html.match(/View certificate/g) ?? []).length, 10);
   for (const certificate of certificates) {
     assert.ok(html.includes(certificate.href));
-    assert.ok(html.includes(`${certificate.issuer} · ${certificate.issued}`));
+    assert.ok(
+      html.includes(
+        `${certificate.issuer} · ${formatPeriod(certificate.start, certificate.end)}`,
+      ),
+    );
   }
 });
 

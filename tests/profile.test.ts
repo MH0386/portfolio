@@ -7,6 +7,7 @@ import {
   intro,
   projects,
 } from "../src/data/profile.ts";
+import { formatPeriod } from "../src/utils/dates.ts";
 
 test("intro is the homepage copy", () => {
   assert.deepEqual(intro, {
@@ -21,10 +22,10 @@ test("profile lists every LinkedIn entry, newest first", () => {
   assert.deepEqual(
     projects.map((project) => project.title),
     [
-      "Seismic Detection",
       "Hexapod Robot",
       "Chatacter",
       "Facial Emotions Detection",
+      "Seismic Detection",
       "Digit Recognizer",
       "Titanic Classification",
       "Face Recognition",
@@ -52,12 +53,12 @@ test("profile lists every LinkedIn entry, newest first", () => {
     ],
   );
   assert.deepEqual(
-    projects.map((project) => project.dates ?? null),
+    projects.map((project) => formatPeriod(project.start, project.end) ?? null),
     [
-      "Oct 2024",
       "Nov 2023 – Present",
       "Oct 2023 – Present",
       "Jul 2023 – Present",
+      "Oct 2024",
       "Aug 2023",
       "Aug 2023",
       "Jul 2023",
@@ -92,22 +93,29 @@ test("profile lists every LinkedIn entry, newest first", () => {
 });
 
 test("title-only projects have a date and no summary or link", () => {
-  const seismic = projects[0];
-  assert.equal(seismic.dates, "Oct 2024");
-  assert.equal(seismic.summary, undefined);
-  assert.equal(seismic.href, undefined);
+  const hexapod = projects[0];
+  assert.equal(hexapod.title, "Hexapod Robot");
+  assert.deepEqual(hexapod.start, new Date(2023, 10, 1));
+  assert.equal(hexapod.end, null);
+  assert.equal(hexapod.summary, undefined);
+  assert.equal(hexapod.href, undefined);
 });
 
 test("described projects keep the published facts", () => {
   const byTitle = Object.fromEntries(
     projects.map((project) => [project.title, project]),
   );
-  assert.equal(byTitle["Titanic Classification"].dates, "Aug 2023");
+  assert.deepEqual(
+    byTitle["Titanic Classification"].start,
+    new Date(2023, 7, 1),
+  );
+  assert.deepEqual(byTitle["Titanic Classification"].end, new Date(2023, 7, 1));
   assert.equal(
     byTitle["Titanic Classification"].summary,
     "Titanic - Machine Learning from Disaster",
   );
-  assert.equal(byTitle["Car Price Prediction"].dates, "Apr 2023 – May 2023");
+  assert.deepEqual(byTitle["Car Price Prediction"].start, new Date(2023, 3, 1));
+  assert.deepEqual(byTitle["Car Price Prediction"].end, new Date(2023, 4, 1));
   const carPriceSummary = byTitle["Car Price Prediction"].summary;
   if (typeof carPriceSummary !== "string") {
     assert.fail("expected Car Price Prediction summary");
@@ -128,14 +136,15 @@ test("described projects keep the published facts", () => {
     assert.fail("expected Iris Classification summary");
   }
   assert.match(irisSummary, /97\.7%/);
-  assert.equal(byTitle["MH0386.github.io"].dates, undefined);
+  assert.equal(byTitle["MH0386.github.io"].start, undefined);
+  assert.equal(byTitle["MH0386.github.io"].end, undefined);
   assert.equal(byTitle["MH0386.github.io"].href, "https://mh0386.github.io");
   assert.equal(projects.filter((project) => project.href).length, 1);
 });
 
 test("experience text leads with the organization", () => {
   assert.deepEqual(
-    experience.map((role) => role.dates),
+    experience.map((role) => formatPeriod(role.start, role.end)),
     [
       "Oct 2024",
       "Nov 2023",
@@ -158,7 +167,8 @@ test("experience text leads with the organization", () => {
 
 test("education is the Cairo University degree", () => {
   assert.deepEqual(education[0], {
-    dates: "2020 – 2024",
+    start: new Date(2020, 0, 1),
+    end: new Date(2024, 11, 31),
     heading: "Bachelor's degree, Computer Science",
     text: "Cairo University. Machine learning internship at the Google Developer Student Club.",
   });
@@ -167,7 +177,8 @@ test("education is the Cairo University degree", () => {
 test("certificates are newest first and every one has a credential URL", () => {
   assert.equal(certificates[0].title, "Dart Functions Framework");
   assert.equal(certificates[0].issuer, "Coursera");
-  assert.equal(certificates[0].issued, "Aug 2022");
+  assert.deepEqual(certificates[0].start, new Date(2022, 7, 1));
+  assert.deepEqual(certificates[0].end, new Date(2022, 7, 1));
   assert.equal(
     certificates[0].href,
     "https://coursera.org/verify/X3R4PWA6F6DU",

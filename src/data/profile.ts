@@ -1,25 +1,36 @@
+import { byNewest } from "../utils/dates.ts";
+
 export const intro = {
   location: "Giza, Egypt",
   name: "Mohamed Hisham Abdelzaher",
   summary:
-    "AI and data science enthusiast. I studied computer science at Cairo University and have built personal projects in artificial intelligence and machine learning.",
+    "AI and Data Science enthusiast. I studied computer science at Cairo University and have built personal projects in AI and ML.",
 };
 
 export type Project = {
   title: string;
-  dates?: string;
+  /** When it started. Left out when the date was never recorded. */
+  start?: Date;
+  /** When it ended. `null` while it is still going. */
+  end?: Date | null;
   summary?: string;
   href?: string;
 };
 
 export type Experience = {
   role: string;
-  dates: string;
+  /** When it started. */
+  start: Date;
+  /** When it ended. `null` while it is still going. */
+  end: Date | null;
   text: string;
 };
 
 export type Education = {
-  dates: string;
+  /** When it started. */
+  start: Date;
+  /** When it ended. `null` while it is still going. */
+  end: Date | null;
   heading: string;
   text: string;
 };
@@ -27,164 +38,141 @@ export type Education = {
 export type Certificate = {
   title: string;
   issuer: string;
-  issued: string;
+  /** When it was issued. */
+  start: Date;
+  /** When it was issued. Same month as `start` for a one-day credential. */
+  end: Date | null;
   href: string;
 };
 
-export const projects: Project[] = [
-  { title: "Seismic Detection", dates: "Oct 2024" },
-  { title: "Hexapod Robot", dates: "Nov 2023 – Present" },
-  { title: "Chatacter", dates: "Oct 2023 – Present" },
-  { title: "Facial Emotions Detection", dates: "Jul 2023 – Present" },
-  { title: "Digit Recognizer", dates: "Aug 2023" },
-  {
-    title: "Titanic Classification",
-    dates: "Aug 2023",
-    summary: "Titanic - Machine Learning from Disaster",
-  },
-  { title: "Face Recognition", dates: "Jul 2023" },
-  { title: "Handwritten Recognition", dates: "Jul 2023" },
-  { title: "Product Recommendation", dates: "Jul 2023" },
-  { title: "Spam Detection", dates: "Jul 2023" },
-  {
-    title: "Car Price Prediction",
-    dates: "Apr 2023 – May 2023",
-    summary:
-      "AI-powered used cars price predictions with linear regression. Final project at the Google Developer Student Club Cairo University. Applied linear regression on a 10-column and 72,435-row dataset of used cars.",
-  },
-  {
-    title: "Logistic Regression",
-    dates: "Apr 2023",
-    summary:
-      "Implemented logistic regression from scratch. Applied 10-fold validation with 0.1, 0.01, 0.001, and 0.0001 learning rates from scratch. The model with the learning rate of 0.1 achieved the highest accuracy.",
-  },
-  {
-    title: "Medical Insurance Cost Prediction",
-    dates: "Feb 2023",
-    summary:
-      "Applied data analysis to the Medical Cost Personal dataset. The work showed how data analysis can clarify medical costs.",
-  },
-  {
-    title: "Motorcycle Data Analysis",
-    dates: "Feb 2023",
-    summary:
-      "Analyzed a motorcycle dataset of 1,061 columns and 7 rows. The data was cleaned and processed using Python and Pandas.",
-  },
-  {
-    title: "Iris Classification",
-    dates: "Dec 2022",
-    summary:
-      "Three-person team. Classified iris flowers into Setosa, Versicolor, and Virginica. Trained on 150 flowers and reached 97.7% accuracy.",
-  },
-  {
-    title: "Game Rental",
-    dates: "May 2022",
-    summary:
-      "Game rental store application. Used C# and Microsoft SQL Server LocalDB. Five-person team, finished in one week.",
-  },
-  {
-    title: "MH0386.github.io",
-    summary: "Personal website, built with Flutter.",
-    href: "https://mh0386.github.io",
-  },
-];
+export const projects: Project[] = byNewest([
+  { title: "Chatacter", start: new Date(2026, 9, 1), end: null , href: "https://github.com/MH0386/Chatacter"},
+  { title: "Facial Emotions Detection", start: new Date(2023, 6, 1), end: null },
+  { title: "Seismic Detection", start: new Date(2024, 9, 1), end: new Date(2024, 9, 1) },
+  { title: "Digit Recognizer", start: new Date(2023, 7, 1), end: new Date(2023, 7, 1) },
+  { title: "Titanic Classification", start: new Date(2023, 7, 1), end: new Date(2023, 7, 1), summary: "Titanic - Machine Learning from Disaster" },
+  { title: "Face Recognition", start: new Date(2023, 6, 1), end: new Date(2023, 6, 1) },
+  { title: "Handwritten Recognition", start: new Date(2023, 6, 1), end: new Date(2023, 6, 1) },
+  { title: "Product Recommendation", start: new Date(2023, 6, 1), end: new Date(2023, 6, 1) },
+]);
 
-export const experience: Experience[] = [
+export const experience: Experience[] = byNewest([
   {
     role: "Participant",
-    dates: "Oct 2024",
+    start: new Date(2024, 9, 1),
+    end: new Date(2024, 9, 1),
     text: "NASA Space Apps Cairo. Cairo, Egypt.",
   },
-  { role: "Attendant", dates: "Nov 2023", text: "DotPy." },
+  {
+    role: "Attendant",
+    start: new Date(2023, 10, 1),
+    end: new Date(2023, 10, 1),
+    text: "DotPy.",
+  },
   {
     role: "Artificial Intelligence Intern",
-    dates: "Aug 2023",
+    start: new Date(2023, 7, 1),
+    end: new Date(2023, 7, 1),
     text: "Science Land. Cairo, Egypt. Artificial intelligence bootcamp.",
   },
   {
     role: "Machine Learning Intern",
-    dates: "Jul 2023",
+    start: new Date(2023, 6, 1),
+    end: new Date(2023, 6, 1),
     text: "Coding Raja Technologies. Hyderabad, India. One-month machine learning workshop. Worked on 3 projects.",
   },
   {
     role: "Intern",
-    dates: "Jun 2023",
+    start: new Date(2023, 5, 1),
+    end: new Date(2023, 5, 1),
     text: "Creativa Hub Aswan. Aswan, Egypt. Career development bootcamp.",
   },
   {
     role: "Machine Learning Intern",
-    dates: "Feb 2023 – Apr 2023",
+    start: new Date(2023, 1, 1),
+    end: new Date(2023, 3, 1),
     text: "DSC Cairo University. Giza, Egypt. Three-month machine learning workshop on data analysis and machine learning techniques, including time with instructors in the field. Worked on 5 projects.",
   },
-];
+]);
 
-export const education: Education[] = [
+export const education: Education[] = byNewest([
   {
-    dates: "2020 – 2024",
+    start: new Date(2020, 0, 1),
+    end: new Date(2024, 11, 31),
     heading: "Bachelor's degree, Computer Science",
     text: "Cairo University. Machine learning internship at the Google Developer Student Club.",
   },
-];
+]);
 
-export const certificates: Certificate[] = [
+export const certificates: Certificate[] = byNewest([
   {
     title: "Dart Functions Framework",
     issuer: "Coursera",
-    issued: "Aug 2022",
+    start: new Date(2022, 7, 1),
+    end: new Date(2022, 7, 1),
     href: "https://coursera.org/verify/X3R4PWA6F6DU",
   },
   {
     title: "Dart: Introducing Class Abstraction",
     issuer: "Coursera",
-    issued: "Aug 2022",
+    start: new Date(2022, 7, 1),
+    end: new Date(2022, 7, 1),
     href: "https://coursera.org/verify/CBTJ62YWD3K7",
   },
   {
     title: "Dart: Using Functions with Lists and Maps",
     issuer: "Coursera",
-    issued: "Aug 2022",
+    start: new Date(2022, 7, 1),
+    end: new Date(2022, 7, 1),
     href: "https://coursera.org/verify/XNCT9EVVDSN6",
   },
   {
     title: "Dart: Variables, Data Structures, Objects, and Conditionals",
     issuer: "Coursera",
-    issued: "Aug 2022",
+    start: new Date(2022, 7, 1),
+    end: new Date(2022, 7, 1),
     href: "https://coursera.org/verify/ZPR9YGTJKDSM",
   },
   {
     title: "Introduction to Dart",
     issuer: "Coursera",
-    issued: "Jul 2022",
+    start: new Date(2022, 6, 1),
+    end: new Date(2022, 6, 1),
     href: "https://coursera.org/verify/ZBJPMK8L47M2",
   },
   {
     title: "Introduction to Java",
     issuer: "Coursera",
-    issued: "May 2022",
+    start: new Date(2022, 4, 1),
+    end: new Date(2022, 4, 1),
     href: "https://coursera.org/verify/UTPHVJYUDJV5",
   },
   {
     title: "Java Basics: Selection and Iteration",
     issuer: "Coursera",
-    issued: "Apr 2022",
+    start: new Date(2022, 3, 1),
+    end: new Date(2022, 3, 1),
     href: "https://coursera.org/verify/JTM9KQJRRVPX",
   },
   {
     title: "SQL",
     issuer: "Sololearn",
-    issued: "Apr 2022",
+    start: new Date(2022, 3, 1),
+    end: new Date(2022, 3, 1),
     href: "https://www.sololearn.com/certificates/CT-D0OEQKTQ",
   },
   {
     title: "C++ Basics: Selection and Iteration",
     issuer: "Coursera",
-    issued: "Sep 2021",
+    start: new Date(2021, 8, 1),
+    end: new Date(2021, 8, 1),
     href: "https://coursera.org/verify/XBZVNYQD2ULL",
   },
   {
     title: "Python Programming Basics",
     issuer: "Information Technology Institute (ITI)",
-    issued: "Jan 2021",
+    start: new Date(2021, 0, 1),
+    end: new Date(2021, 0, 1),
     href: "https://maharatech.gov.eg/badges/badge.php?hash=cdd36d5d43a2643e0b4b1ef117580488dc81fee7",
   },
-];
+]);

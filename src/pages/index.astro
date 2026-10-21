@@ -1,11 +1,10 @@
 ---
 import Layout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Wrapper/Section.astro";
-import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
-import Eyebrow from "@/components/Typography/Eyebrow.astro";
+import ContentHero from "@/components/Wrapper/ContentHero.astro";
 import Heading from "@/components/Typography/Heading.astro";
-import Paragraph from "@/components/Typography/Paragraph.astro";
-import Grid from "@/components/Wrapper/Grid.astro";
+import Timeline from "@/components/Wrapper/Timeline.astro";
+import TimelineItem from "@/components/Wrapper/TimelineItem.astro";
 import Card from "@/components/Item/Card.astro";
 import {
   certificates,
@@ -14,73 +13,86 @@ import {
   intro,
   projects,
 } from "@/data/profile.ts";
+import { formatPeriod } from "@/utils/dates.ts";
 ---
 
 <Layout theme="dark">
   <Section>
-    <ContentWrapper>
-      <Eyebrow>{intro.location}</Eyebrow>
-      <Heading tag="h1">{intro.name}</Heading>
-      <Paragraph>{intro.summary}</Paragraph>
-    </ContentWrapper>
+    <ContentHero
+      name={intro.name}
+      location={intro.location}
+      summary={intro.summary}
+    />
   </Section>
   <Section id="projects">
     <Heading tag="h2">Projects</Heading>
-    <Grid small={2} medium={3}>
+    <Timeline>
       {
         projects.map((project) => (
-          <Card
-            headingTag="h3"
-            eyebrow={project.dates}
-            heading={project.title}
-            text={project.summary}
-            buttonLabel={project.href ? "View project" : undefined}
-            buttonHref={project.href}
-          />
+          <TimelineItem>
+            <Card
+              headingTag="h3"
+              eyebrow={formatPeriod(project.start, project.end)}
+              heading={project.title}
+              text={project.summary}
+              buttonLabel={project.href ? "View project" : undefined}
+              buttonHref={project.href}
+            />
+          </TimelineItem>
         ))
       }
-    </Grid>
+    </Timeline>
   </Section>
   <Section id="experience">
     <Heading tag="h2">Experience</Heading>
-    {
-      experience.map((role) => (
-        <Card
-          headingTag="h3"
-          eyebrow={role.dates}
-          heading={role.role}
-          text={role.text}
-        />
-      ))
-    }
+    <Timeline>
+      {
+        experience.map((role) => (
+          <TimelineItem>
+            <Card
+              headingTag="h3"
+              eyebrow={formatPeriod(role.start, role.end)}
+              heading={role.role}
+              text={role.text}
+            />
+          </TimelineItem>
+        ))
+      }
+    </Timeline>
   </Section>
   <Section id="education">
     <Heading tag="h2">Education</Heading>
-    {
-      education.map((item) => (
-        <Card
-          headingTag="h3"
-          eyebrow={item.dates}
-          heading={item.heading}
-          text={item.text}
-        />
-      ))
-    }
+    <Timeline>
+      {
+        education.map((item) => (
+          <TimelineItem>
+            <Card
+              headingTag="h3"
+              eyebrow={formatPeriod(item.start, item.end)}
+              heading={item.heading}
+              text={item.text}
+            />
+          </TimelineItem>
+        ))
+      }
+    </Timeline>
   </Section>
   <Section id="certificates">
     <Heading tag="h2">Certificates</Heading>
-    <Grid small={2} medium={3}>
+    <Timeline>
       {
         certificates.map((certificate) => (
-          <Card
-            headingTag="h3"
-            eyebrow={`${certificate.issuer} · ${certificate.issued}`}
-            heading={certificate.title}
-            buttonLabel="View certificate"
-            buttonHref={certificate.href}
-          />
+          <TimelineItem>
+            <Card
+              headingTag="h3"
+              eyebrow={`${certificate.issuer} · ${formatPeriod(certificate.start, certificate.end)}`}
+              heading={certificate.title}
+              buttonLabel="View certificate"
+              buttonHref={certificate.href}
+            />
+          </TimelineItem>
         ))
       }
-    </Grid>
+    </Timeline>
   </Section>
 </Layout>
